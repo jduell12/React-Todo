@@ -58,7 +58,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h2>Welcome to your Todo App!</h2>
+        <h2>Welcome to your Todo List App!</h2>
         <TodoList 
           taskList={this.state.tasks}
           completeTask={this.completedTask}

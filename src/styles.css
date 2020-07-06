@@ -57,6 +57,8 @@ html, body{
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: #000000;
+    color: #969696;
 }
 
 .App{
@@ -73,7 +75,7 @@ input{
 }
 
 h2{
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
 p{
@@ -81,7 +83,8 @@ p{
 }
 
 input{
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    background-color: #F0F0F0;
 }
 
 form{
