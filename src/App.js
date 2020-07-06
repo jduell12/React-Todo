@@ -32,7 +32,6 @@ class App extends React.Component {
   }
 
   completedTask = taskId => {
-    console.log(taskId);
     this.setState({
       tasks: this.state.tasks.map(task => {
         if(task.id === taskId){
@@ -42,6 +41,17 @@ class App extends React.Component {
           };
         } else {
           return task;
+        }
+      })
+    })
+  }
+
+  clearCompleted = () => {
+    this.setState({
+      tasks: this.state.tasks.map(task => {
+        return {
+          ...task,
+          completed: false
         }
       })
     })
@@ -58,6 +68,7 @@ class App extends React.Component {
         <TodoForm 
           onSubmit={this.addTask} 
           addTask={this.addTask}
+          clearCompleted={this.clearCompleted}
         />
       </div>
     );
