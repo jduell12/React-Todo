@@ -8,11 +8,6 @@ const tasks = [
     task: 'Watch videos',
     id: Date.now(),
     completed: false
-  }, 
-  {
-    task: 'Do laundry',
-    id: Date.now(),
-    completed: false
   }
 ]
 
@@ -29,10 +24,26 @@ class App extends React.Component {
       task: taskName,
       id: Date.now(),
       completed: false
-    }
+    };
 
     this.setState({
-      tasks: [...tasks, newTask]
+      tasks: [...this.state.tasks, newTask]
+    })
+  }
+
+  completedTask = taskId => {
+    console.log(taskId);
+    this.setState({
+      tasks: this.state.tasks.map(task => {
+        if(task.id === taskId){
+          return {
+            ...task,
+            completed: !task.completed
+          };
+        } else {
+          return task;
+        }
+      })
     })
   }
 
@@ -40,8 +51,14 @@ class App extends React.Component {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoList taskList={this.state.tasks}/>
-        <TodoForm onSubmit={this.addTask} addTask={this.addTask}/>
+        <TodoList 
+          taskList={this.state.tasks}
+          completeTask={this.completedTask}
+        />
+        <TodoForm 
+          onSubmit={this.addTask} 
+          addTask={this.addTask}
+        />
       </div>
     );
   }

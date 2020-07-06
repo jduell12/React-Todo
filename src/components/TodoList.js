@@ -5,9 +5,9 @@ const TodoList = props => {
     return(
         <div>
             {
-                props.taskList.map(task => {
-                    return <Todo key={task.id} task={task}/>
-                })
+                props.taskList.map(task => (
+                     <Todo key={task.id} task={task} completeTask={props.completeTask}/>
+                ))
             }
         </div>
     )
