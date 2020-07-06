@@ -49,9 +49,10 @@ class App extends React.Component {
   clearCompleted = () => {
     this.setState({
       tasks: this.state.tasks.map(task => {
-        return {
-          ...task,
-          completed: false
+        if(task.completed !== true){
+          return task;
+        } else {
+          return <span></span>
         }
       })
     })
