@@ -17,7 +17,8 @@ class App extends React.Component {
     super();
     this.state ={
       tasks: tasks,
-      searchInput: ''
+      searchInput: '',
+      input: ''
     }
   }
 
@@ -62,6 +63,20 @@ class App extends React.Component {
     })
   }
 
+  inputChange = event => {
+    this.setState({
+      input: event.target.value
+    });
+  }
+
+  inputSubmit = event => {
+    event.preventDefault();
+    this.props.addTask(this.state.input);
+    this.setState({
+        input: ''
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -82,6 +97,9 @@ class App extends React.Component {
           onSubmit={this.addTask} 
           addTask={this.addTask}
           clearCompleted={this.clearCompleted}
+          input={this.state.input}
+          handleChange={this.inputChange}
+          handleSubmit={this.inputSubmit}
         />
       </div>
     );
