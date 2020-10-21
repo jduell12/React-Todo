@@ -1,13 +1,106 @@
 import React from 'react';
+import TodoForm from './components/TodoForm'
+import TodoList from './components/TodoList'
+import SearchBar from './components/SearchBarContainer'
+import './styles.css'
+
+const tasks = [
+  {
+    task: 'Watch videos',
+    id: Date.now(),
+    completed: false
+  }
+]
 
 class App extends React.Component {
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
+  constructor(){
+    super();
+    this.state ={
+      tasks: tasks,
+      searchInput: '',
+      input: ''
+    }
+  }
+
+  addTask = taskName =>{
+    const newTask = {
+      task: taskName,
+      id: Date.now(),
+      completed: false
+    };
+
+    this.setState({
+      tasks: [...this.state.tasks, newTask]
+    })
+  }
+
+  completedTask = taskId => {
+    this.setState({
+      tasks: this.state.tasks.map(task => {
+        if(task.id === taskId){
+          return {
+            ...task,
+            completed: !task.completed
+          };
+        } else {
+          return task;
+        }
+      })
+    })
+  }
+
+  clearCompleted = () => {
+    this.setState({
+      tasks: this.state.tasks.filter(task => {
+        return task.completed !== true;
+      })
+    })
+  }
+
+  handleChange = event => {
+    this.setState({
+      searchInput: event.target.value
+    })
+  }
+
+  inputChange = event => {
+    this.setState({
+      input: event.target.value
+    });
+  }
+
+  inputSubmit = event => {
+    event.preventDefault();
+    this.props.addTask(this.state.input);
+    this.setState({
+        input: ''
+    })
+  }
+
   render() {
     return (
-      <div>
-        <h2>Welcome to your Todo App!</h2>
+      <div className="App">
+        <h2>Welcome to Your Todo List App!</h2>
+        <SearchBar handleChange={this.handleChange}/>
+        <TodoList 
+          taskList={
+            this.state.tasks.filter(task => {
+              if(!this.state.searchInput || task.task.includes(this.state.searchInput)){
+                return task;
+              }
+              return false;
+            })
+          }
+          completeTask={this.completedTask}
+        />
+        <TodoForm 
+          onSubmit={this.addTask} 
+          addTask={this.addTask}
+          clearCompleted={this.clearCompleted}
+          input={this.state.input}
+          handleChange={this.inputChange}
+          handleSubmit={this.inputSubmit}
+        />
       </div>
     );
   }
